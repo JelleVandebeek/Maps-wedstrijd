@@ -25,6 +25,20 @@
             }).addTo(kaart);
 
             var bounds = [[50.92825,5.38400],[50.92687,5.38591]];
+            var y_max = 50.92825;
+            var y_min = 50.92687;
+            var x_max = 5.38591;
+            var x_min = 5.38400;
+
+            var lat = y_min + (Math.random() * (y_max - y_min));
+            var lng = x_min + (Math.random() * (x_max - x_min));
+
+            var circle = L.circle([lat, lng], {
+                    color: 'red',      // randkleur
+                    fillColor: '#f03',  // vulkleur
+                    fillOpacity: 0.3,
+                    radius: 25         // straal in meters
+                }).addTo(kaart);
 
             L.rectangle(bounds, { color: "#ff7800", weight: 1 }).addTo(kaart);
 

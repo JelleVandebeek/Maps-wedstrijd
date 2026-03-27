@@ -1,52 +1,42 @@
 <!DOCTYPE html>
 <html lang="nl">
+    <head>
+        <meta charset="utf-8" />
+        <title>Leaflet Kaart</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <style>
+            #kaart {
+                height: 500px;
+                width: 100%;
+            }
+        </style>
+    </head>
 
-<head>
-    <meta charset="utf-8" />
-    <title>Leaflet Kaart</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <style>
-        #kaart {
-            height: 500px;
-            width: 100%;
-        }
-    </style>
-</head>
+    <body>
+        <h1>Mijn Leaflet kaart</h1>
+        <div id="kaart"></div>
 
-<body>
-    <h1>Mijn Leaflet kaart</h1>
-    <div id="kaart"></div>
+        <script>
+            const kaart = L.map('kaart').setView([50.8503, 4.3517], 13);
 
-    <script>
-        const kaart = L.map('kaart').setView([50.8503, 4.3517], 13);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(kaart);
 
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(kaart);
+            var bounds = [[50.92825,5.38400],[50.92687,5.38591]];
 
-        // Marker met popup
-        L.marker([50.8503, 4.3517])
-            .addTo(kaart)
-            .bindPopup('<b>Brussel</b><br>Hoofdstad van België.')
-            .openPopup();
+            L.rectangle(bounds, { color: "#ff7800", weight: 1 }).addTo(kaart);
 
-        // Cirkel
-        L.circle([50.925385347781784, 5.392290118354094], {
-            color: 'red',
-            fillColor: '#f03',
-            fillOpacity: 0.3,
-            radius: 300
-        }).addTo(kaart).bindPopup('Een rode cirkel.');
-
-        // Klik-event
-        kaart.on('click', function (e) {
-            L.popup()
-                .setLatLng(e.latlng)
-                .setContent('Coördinaten: ' + e.latlng.lat.toFixed(4) + ', ' + e.latlng.lng.toFixed(4))
-                .openOn(kaart);
-        });
-    </script>
-</body>
+            kaart.fitBounds(bounds);
+            // Klik-event
+            kaart.on('click', function (e) {
+                L.popup()
+                    .setLatLng(e.latlng)
+                    .setContent('Coördinaten: ' + e.latlng.lat.toFixed(4) + ', ' + e.latlng.lng.toFixed(4))
+                    .openOn(kaart);
+            });
+        </script>
+    </body>
 
 </html>
